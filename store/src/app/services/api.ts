@@ -1,7 +1,12 @@
 import { Product, CartItem } from '../context/CartContext';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
-console.log('API_URL:', API_URL); // DEBUG: Ver qué URL está usando
+
+// DEBUG: Ver qué URL está usando
+setTimeout(() => {
+  console.error('DEBUG API_URL:', API_URL);
+  console.error('DEBUG API_URL length:', API_URL.length);
+}, 1000);
 
 const SESSION_ID = localStorage.getItem('sessionId') || 
   Math.random().toString(36).substring(2, 15);
