@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useToast } from './ToastContext';
 import { useAuth } from './AuthContext';
+import { API_BASE_URL } from '../config/api';
 
 interface Product {
   id: number;
@@ -38,7 +39,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
       }
 
       try {
-        const res = await fetch('/api/wishlist', {
+        const res = await fetch(`${API_BASE_URL}/api/wishlist`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -71,7 +72,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     });
 
     try {
-      const res = await fetch('/api/wishlist', {
+      const res = await fetch(`${API_BASE_URL}/api/wishlist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +103,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     setWishlist((prev) => prev.filter((item) => item.id !== productId));
 
     try {
-      const res = await fetch(`/api/wishlist/${productId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/wishlist/${productId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

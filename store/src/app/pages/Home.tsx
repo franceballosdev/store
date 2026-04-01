@@ -3,13 +3,14 @@ import { ArrowRight, Truck, Shield, Headphones } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { useState, useEffect } from 'react';
 import { Product } from '../context/CartContext';
+import { API_BASE_URL } from '../config/api';
 
 export function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/products?featured=true')
+    fetch(`${API_BASE_URL}/api/products?featured=true`)
       .then(res => res.json())
       .then(data => {
         setFeaturedProducts(data.slice(0, 4));

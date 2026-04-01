@@ -3,6 +3,7 @@ import { SearchAndFilter } from '../components/SearchAndFilter';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { FiltersSkeleton } from '../components/Skeleton';
 import { Product } from '../context/CartContext';
+import { API_BASE_URL } from '../config/api';
 
 export function Shop() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -12,7 +13,7 @@ export function Shop() {
   const [sortBy, setSortBy] = useState<string>('featured');
 
   useEffect(() => {
-    fetch('/api/products')
+    fetch(`${API_BASE_URL}/api/products`)
       .then(res => res.json())
       .then((data: Product[]) => {
         setProducts(data);

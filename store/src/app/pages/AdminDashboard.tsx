@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { Plus, Edit, Trash2, Search, ArrowLeft, Package, ShoppingBag, Users, TrendingUp, FileText, LayoutDashboard } from 'lucide-react';
 import { Product } from '../context/CartContext';
+import { API_BASE_URL } from '../config/api';
 
 interface DashboardStats {
   sales: {
@@ -100,7 +101,7 @@ export function AdminDashboard() {
   const fetchStats = async () => {
     setStatsLoading(true);
     try {
-      const res = await fetch('/api/admin/stats', {
+      const res = await fetch(`${API_BASE_URL}/api/admin/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -117,7 +118,7 @@ export function AdminDashboard() {
   const fetchProducts = async () => {
     setProductsLoading(true);
     try {
-      const res = await fetch('/api/products');
+      const res = await fetch(`${API_BASE_URL}/api/products`);
       const data = await res.json();
       setProducts(data);
     } catch (error) {
@@ -130,7 +131,7 @@ export function AdminDashboard() {
   const fetchOrders = async () => {
     setOrdersLoading(true);
     try {
-      const res = await fetch('/api/orders');
+      const res = await fetch(`${API_BASE_URL}/api/orders`);
       const data = await res.json();
       setOrders(data);
     } catch (error) {
@@ -143,7 +144,7 @@ export function AdminDashboard() {
   const fetchPages = async () => {
     setPagesLoading(true);
     try {
-      const res = await fetch('/api/pages');
+      const res = await fetch(`${API_BASE_URL}/api/pages`);
       if (res.ok) {
         const data = await res.json();
         setPages(data);
@@ -157,7 +158,7 @@ export function AdminDashboard() {
 
   const handleDeleteProduct = async (id: number) => {
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/products/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -173,7 +174,7 @@ export function AdminDashboard() {
 
   const handleUpdateOrderStatus = async (orderId: number, status: string) => {
     try {
-      const res = await fetch(`/api/orders/${orderId}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -194,7 +195,7 @@ export function AdminDashboard() {
     if (!confirm('¿Estás seguro de eliminar este pedido?')) return;
     
     try {
-      const res = await fetch(`/api/orders/${orderId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/orders/${orderId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -211,7 +212,7 @@ export function AdminDashboard() {
     if (!editingPage) return;
     
     try {
-      const res = await fetch(`/api/pages/${editingPage.slug}`, {
+      const res = await fetch(`${API_BASE_URL}/api/pages/${editingPage.slug}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -231,7 +232,7 @@ export function AdminDashboard() {
 
   const handleLoadPage = async (slug: string) => {
     try {
-      const res = await fetch(`/api/pages/${slug}`);
+      const res = await fetch(`${API_BASE_URL}/api/pages/${slug}`);
       if (res.ok) {
         const data = await res.json();
         setEditingPage({ slug: data.slug, title: data.title, content: data.content });
