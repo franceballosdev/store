@@ -8,6 +8,7 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ProductReviews } from '../components/ProductReviews';
 import { WishlistButton } from '../components/WishlistButton';
 import { ProductDetailSkeleton } from '../components/Skeleton';
+import { API_BASE_URL } from '../config/api';
 
 export function ProductDetail() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export function ProductDetail() {
     if (!id) return;
 
     // Fetch product details
-    fetch(`/api/products/${id}`)
+    fetch(`${API_BASE_URL}/api/products/${id}`)
       .then(res => {
         if (!res.ok) throw new Error('Product not found');
         return res.json();
@@ -29,7 +30,7 @@ export function ProductDetail() {
         setProduct(productData);
         
         // Fetch related products from same category
-        return fetch(`/api/products?category=${productData.category}`);
+        return fetch(`${API_BASE_URL}/api/products?category=${productData.category}`);
       })
       .then(res => res.json())
       .then(allProducts => {
